@@ -1,0 +1,6 @@
+title: Sample quiz
+questions:
+- text: "Question 1"
+  acceptable: ["No", "nope", "never"]
+- text: "Question 2"
+  acceptable: []
