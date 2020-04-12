@@ -5,12 +5,16 @@ parse_spec <- function(file) {
   )
 }
 
-answer_box <- function(i) {
-  textInput(glue("a", i), label =  glue("Answer ", i), value = "")
+answer_box <- function(x, i) {
+  if (!is.null(x$options)) {
+    selectInput(glue("a", i), label =  glue("Answer ", i), choices = x$options)
+  } else {
+    textInput(glue("a", i), label =  glue("Answer ", i), value = "")
+  }
 }
 
 question <- function(x, i) {
-  renderText(x$questions[[i]]$text)
+  x$questions[[i]]$text
 }
 
 is_correct <- function(question, answer) {

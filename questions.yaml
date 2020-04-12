@@ -1,6 +1,9 @@
 title: Sample quiz
 questions:
-- text: "Question 1"
-  acceptable: ["No", "nope", "never"]
-- text: "Question 2"
-  acceptable: []
+- text: "What is the slowest mammal?"
+  acceptable: ["sloth"]
+- text: |
+    Lucifer, duchess & figaro are cartoon depictions of which animal?
+  acceptable: ["cat", "cats"]
+- text: Out of 12 dogs on titanic, how many survived?
+  options: [0,1,2,3,4,5,6,7,8,9,10,11,12]
