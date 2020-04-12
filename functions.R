@@ -13,8 +13,9 @@ answer_box <- function(x, i) {
   }
 }
 
+
 question <- function(x, i) {
-  x$questions[[i]]$text
+  renderText(x$questions[[i]]$text)
 }
 
 is_correct <- function(question, answer) {
@@ -29,3 +30,22 @@ send <- function(input) {
   
 }
 
+
+npbuttons <- function(id, label = "npbuttons") {
+  ns <- NS(id)
+  tagList(
+    actionButton(ns("prevq"), "Prev"),
+    actionButton(ns("nextq"), "Next")
+  )
+}
+
+counter <- function(input, output, session) {
+  count <- reactiveValues(val = 1)
+  observeEvent(input$nextq, {count$val <- count$val + 1})
+  observeEvent(input$prevq, {count$val <- count$val - 1})
+  observe({
+    toggleState("nextq", count$val < length(spec$questions))
+    toggleState("prevq", count$val > 1)
+  })
+  count
+}

@@ -11,7 +11,6 @@ source("functions.R")
 
 ui <- shinyUI(fluidPage(
   theme = shinytheme("darkly"),
-  includeCSS("styles.css"),
   useShinyjs(),
   uiOutput("title"),
 
@@ -23,8 +22,7 @@ ui <- shinyUI(fluidPage(
     )),
     mainPanel(
       uiOutput("question"),
-      actionButton("prevq", "Prev"),
-      actionButton("nextq", "Next"),
+      npbuttons("counter1")
     )
   )
 ))
@@ -36,9 +34,7 @@ server <- shinyServer(function(input, output, session) {
   output$inputs <- renderUI(imap(spec$questions, answer_box))
 
   # Question counter
-  counter <- reactiveValues(val = 1)
-  observeEvent(input$nextq, {counter$val <- counter$val + 1})
-  observeEvent(input$prevq, {counter$val <- counter$val - 1})
+  counter <- callModule(counter, "counter1")
 
   # Update buttons and current question
   observe({
@@ -47,8 +43,6 @@ server <- shinyServer(function(input, output, session) {
       h4(glue("Question ", counter$val, ":")),
       h2(question(spec, counter$val))
     ))
-    toggleState("nextq", counter$val < length(spec$questions))
-    toggleState("prevq", counter$val > 1)
   })
 
   # Submit action
